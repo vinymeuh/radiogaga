@@ -7,7 +7,7 @@ The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network au
 ## Installation
 
 1. Clone this repository to your local drive
-2. Manually [install Alpine Linux](https://github.com/vinymeuh/radiogagad/blob/master/alpine/README.md) on your SD card
+2. Manually [install Alpine Linux](https://github.com/vinymeuh/radiogaga/blob/master/alpine/README.md) on your SD card
 3. Install Ansible
 
 ```
@@ -16,5 +16,5 @@ The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network au
 ~> pip install -r requirements.txt  
 ```
 
-4. Test Ansible connectivity with ```ansible -m ping radiogaga -o -k```
+4. Setup ssh connectivity for Ansible with ```ansible-playbook radiogaga.yml -t ssh -k```
 5. Run ```ansible-playbook radiogaga.yml``` inside this directory

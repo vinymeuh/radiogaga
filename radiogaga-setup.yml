@@ -1,0 +1,9 @@
+---
+- name: Setting up radiogaga
+  hosts: radiogaga
+  roles:
+    - { role: ssh, tags: ['never', 'ssh'] }
+  tasks:
+    - name: Commit changes
+      command: lbu commit -d
+      tags: always
