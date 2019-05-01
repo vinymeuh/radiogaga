@@ -45,7 +45,7 @@ Now it must be possible to connect remotely as root using ssh.
 ```
 radiogaga:~# apk update
 radiogaga:~# apk add dbus avahi python3
-radiogaga:~# rc-update add avahi-daemon boot
+radiogaga:~# rc-update add avahi-daemon default
 radiogaga:~# rc-service avahi-daemon start
 radiogaga:~# lbu commit -d
 ```
