@@ -1,0 +1,19 @@
+- name: Check current firmware configuration
+  copy:
+    src: usercfg.txt
+    dest: /media/mmcblk0p1/usercfg.txt
+  check_mode: true
+  register: firmware
+
+- name: Setup firmware
+  block:
+    - command: mount -o remount,rw /media/mmcblk0p1
+      args:
+        warn: no
+    - copy:
+        src: usercfg.txt
+        dest: /media/mmcblk0p1/usercfg.txt
+    - command: mount -o remount,ro /media/mmcblk0p1
+      args:
+        warn: no
+  when: firmware.changed

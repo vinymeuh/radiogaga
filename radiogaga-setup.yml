@@ -3,6 +3,8 @@
   hosts: radiogaga
   roles:
     - { role: ssh, tags: ['never', 'ssh'] }
+    - { role: firmware, tags: ['firmware'] }
+    - { role: usbkey, tags: ['usbkey'] }
   tasks:
     - name: Commit changes
       command: lbu commit -d

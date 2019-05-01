@@ -1,0 +1,10 @@
+# disable bluetooth
+dtoverlay=pi3-disable-bt
+# disable wifi
+dtoverlay=pi3-disable-wifi
+# disable the Pi integrated soundcard
+dtparam=audio=off
+# enable I2S
+dtparam=i2s=on
+# enable Sabre DAC ES9023
+dtoverlay=hifiberry-dac
