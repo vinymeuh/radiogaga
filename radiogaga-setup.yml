@@ -5,6 +5,7 @@
     - { role: ssh, tags: ['never', 'ssh'] }
     - { role: base, tags: ['base'] }
     - { role: usbkey, tags: ['usbkey'] }
+    - { role: mpd, tags: ['mpd'] }
   tasks:
     - name: Commit changes
       command: lbu commit -d

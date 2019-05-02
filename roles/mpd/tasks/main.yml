@@ -1,0 +1,38 @@
+- name: Install mpd
+  apk:
+    name: mpd
+    state: present
+
+- name: Enable mpd
+  service:
+    name: mpd
+    enabled: yes
+  notify: restart mpd
+
+- name: Copy mpd.conf
+  copy:
+    src: mpd.conf
+    dest: /etc/mpd.conf
+    owner: mpd
+    group: audio
+    mode: 0640
+  notify: restart mpd
+
+- name: Create a directory for mpd on USBKEY
+  file:
+    path: /media/USBKEY/mpd
+    state: directory
+    owner: mpd
+    group: audio
+    mode: 0755
+
+- name: Create music & playlists directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: mpd
+    group: audio
+    mode: 0777
+  with_items:
+    - /media/USBKEY/mpd/music
+    - /media/USBKEY/mpd/playlists

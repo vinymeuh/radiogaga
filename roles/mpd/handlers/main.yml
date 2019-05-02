@@ -1,0 +1,4 @@
+- name: restart mpd
+  service:
+    name: mpd
+    state: restarted
