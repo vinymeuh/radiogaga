@@ -1,0 +1,14 @@
+- name: Remount SD card RW
+  command: mount -o remount,rw /media/mmcblk0p1
+  args:
+    warn: no
+
+- name: Copy usercfg.txt on SD card
+  copy:
+    src: usercfg.txt
+    dest: /media/mmcblk0p1/usercfg.txt
+
+- name: Remount SD card RO
+  command: mount -o remount,ro /media/mmcblk0p1
+  args:
+    warn: no

@@ -3,7 +3,7 @@
   hosts: radiogaga
   roles:
     - { role: ssh, tags: ['never', 'ssh'] }
-    - { role: firmware, tags: ['firmware'] }
+    - { role: base, tags: ['base'] }
     - { role: usbkey, tags: ['usbkey'] }
   tasks:
     - name: Commit changes
