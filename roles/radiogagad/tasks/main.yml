@@ -1,0 +1,20 @@
+# TODO: download radiogagad from Github
+
+- name: Copy radiogagad init.d script
+  copy:
+    src: radiogagad.service
+    dest: /etc/init.d/radiogagad
+    mode: 0755
+  notify: restart radiogagad  
+
+- name: Add the radiogagad files to LBU included files
+  command: lbu add '{{ item }}'
+  loop:
+    - "/usr/local/bin/radiogagad"
+    - "/etc/init.d/radiogagad"
+
+- name: Enable radiogagad
+  service:
+    name: radiogagad
+    enabled: yes
+  notify: restart radiogagad

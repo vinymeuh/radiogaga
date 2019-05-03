@@ -6,6 +6,7 @@
     - { role: base, tags: ['base'] }
     - { role: usbkey, tags: ['usbkey'] }
     - { role: mpd, tags: ['mpd'] }
+    - { role: radiogagad, tags: ['radiogagad'] }
   tasks:
     - name: Commit changes
       command: lbu commit -d
