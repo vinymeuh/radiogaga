@@ -16,5 +16,5 @@ The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network au
 ~> pip install -r requirements.txt  
 ```
 
-4. Setup ssh connectivity for Ansible with ```ansible-playbook radiogaga.yml -t ssh -k```
-5. Run ```ansible-playbook radiogaga.yml``` inside this directory
+4. Setup ssh connectivity for Ansible with ```ansible-playbook radiogaga-setup.yml -t ssh -k```
+5. Run ```ansible-playbook radiogaga-setup.yml``` inside this directory
