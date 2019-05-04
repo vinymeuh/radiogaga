@@ -8,3 +8,21 @@
 - name: Setup Firmware
   include_tasks: firmware.yml
   when: firmware.changed
+
+- name: Remode useless console getty
+  lineinfile:
+    path: /etc/inittab
+    state: absent
+    regexp: '^{{ item }}:.*getty.*' 
+  loop:
+    - "tty2"
+    - "tty3"
+    - "tty4"
+    - "tty5"
+    - "tty6"
+
+- name: Disable crond
+  service:
+    name: crond
+    enabled: no
+    state: stopped
