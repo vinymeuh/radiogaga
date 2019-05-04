@@ -1,4 +1,26 @@
-# TODO: download radiogagad from Github
+- name: Retrieve download url for latest radiogagad release from github
+  uri:
+    url: https://api.github.com/repos/vinymeuh/radiogagad/releases/latest
+    return_content: true
+  register: json_response
+
+- name: Download latest radiogagad release from github
+  get_url:
+    url: "{{ json_response.json.assets.0.browser_download_url }}"
+    dest: /tmp/radiogagad.zip
+
+- name: Unarchive downloaded file
+  command: unzip -oq /tmp/radiogagad.zip -d /tmp
+  args:
+    warn: no  # unarchive module not working on Alpine Linux
+
+- name: Copy radiogagad binary
+  copy:
+    src: /tmp/radiogagad
+    dest: /usr/local/bin/radiogagad
+    remote_src: yes
+    mode: 0755
+  notify: restart radiogagad  
 
 - name: Copy radiogagad init.d script
   copy:
