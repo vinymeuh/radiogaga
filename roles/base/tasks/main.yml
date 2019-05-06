@@ -9,20 +9,12 @@
   include_tasks: firmware.yml
   when: firmware.changed
 
-- name: Remode useless console getty
-  lineinfile:
-    path: /etc/inittab
-    state: absent
-    regexp: '^{{ item }}:.*getty.*' 
-  loop:
-    - "tty2"
-    - "tty3"
-    - "tty4"
-    - "tty5"
-    - "tty6"
+# https://bugs.alpinelinux.org/issues/8028
+- name: Workaround for busybox syslogd -Z option broken
+  replace:
+    path: /etc/conf.d/syslog
+    regexp: '^SYSLOGD_OPTS="(.*)-Z(.*)"'
+    replace: 'SYSLOGD_OPTS="\1\2"'
+  notify: restart syslogd
 
-- name: Disable crond
-  service:
-    name: crond
-    enabled: no
-    state: stopped
+- include_tasks: bootoptimization.yml
