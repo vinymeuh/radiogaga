@@ -30,6 +30,13 @@
     mode: 0644
   notify: restart samba
 
+- name: Disable startup of nmbd
+  replace:
+    path: /etc/conf.d/samba
+    regexp: '^daemon_list="smbd nmbd"'
+    replace: 'daemon_list="smbd"'
+  notify: restart samba
+
 - name: Enable Avahi service for Samba
   copy:
     src: smb.service
