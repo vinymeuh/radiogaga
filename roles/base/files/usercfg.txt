@@ -1,3 +1,6 @@
+# disable HDMI, same as tvservice -o 
+hdmi_ignore_hotplug=1
+hdmi_ignore_composite=1
 # disable bluetooth
 dtoverlay=pi3-disable-bt
 # disable wifi
