@@ -26,7 +26,9 @@ start() {
     ebegin "Starting ${NAME}"
     start-stop-daemon  --background --start --exec ${DAEMON} \
         --env RGGD_STARTUP_PLAYLISTS=${RGGD_STARTUP_PLAYLISTS} \
-        --make-pidfile --pidfile ${PID} -1 ${LOGFILE} -2 ${LOGFILE}
+        --stdout-logger "logger -t ${NAME} -p daemon.info"  \
+        --stderr-logger "logger -t ${NAME} -p daemon.err"  \
+        --make-pidfile --pidfile ${PID}
     eend $?
 }
 
