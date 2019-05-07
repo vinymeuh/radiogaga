@@ -1,0 +1,24 @@
+- name: Blacklist useless kernel modules
+  copy:
+    src: radiogaga_blacklist.conf
+    dest: /etc/modprobe.d/radiogaga_blacklist.conf
+
+- name: Disable useless services
+  service:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  loop:
+    - "crond"
+
+- name: Remove useless console getty
+  lineinfile:
+    path: /etc/inittab
+    state: absent
+    regexp: '^{{ item }}:.*getty.*' 
+  loop:
+    - "tty2"
+    - "tty3"
+    - "tty4"
+    - "tty5"
+    - "tty6"

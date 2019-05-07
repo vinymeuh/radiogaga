@@ -1,3 +1,8 @@
+- name: restart avahi
+  service:
+    name: avahi-daemon
+    state: restarted
+
 - name: restart syslogd
   service:
     name: syslog
