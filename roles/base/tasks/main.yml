@@ -14,7 +14,14 @@
   include_tasks: firmware.yml
   when: firmware.changed
 
+- name: Enable community APK repository
+  replace:
+    path: /etc/apk/repositories
+    regexp: '^#(http://.*/v.*/community)'
+    replace: '\1'
+
 - import_tasks: avahi.yml
+- import_tasks: rngd.yml
 - import_tasks: cleaning.yml
 
 # https://bugs.alpinelinux.org/issues/8028
