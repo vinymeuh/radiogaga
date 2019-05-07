@@ -1,5 +1,49 @@
 # radiogaga - notes & references
 
+## Raspberry Pi
+
+### Disable HDMI at boot
+
+By default:
+
+```
+radiogaga:/opt/vc/bin# ./tvservice -s
+state 0x120006 [DVI DMT (82) RGB full 16:9], 1920x1080 @ 60.00Hz, progressive
+```
+
+With ```hdmi_ignore_hotplug=1``` & ```hdmi_ignore_composite=1```
+
+```
+radiogaga:/opt/vc/bin# ./tvservice -s
+state 0x120001 [TV is off]
+```
+
+References:
+
+* [add option in config.txt to disable video out](https://github.com/raspberrypi/firmware/issues/352#issuecomment-169455388)
+* [Disable video via tvservice vs vcgencmd](https://github.com/raspberrypi/userland/issues/447)
+
+## Alpine Linux boot optimization
+
+### bootchard
+
+To enable **bootchartd**, add option ```chart``` to ```cmdline.txt```.
+
+After boot, retrieve ```/var/log/bootchart.tgz```. To generate a PNG from this, we need [pythonchartgui](https://github.com/xrmx/bootchart):
+
+```
+$ apk add python2 py2-cairo
+$ git clone https://github.com/xrmx/bootchart
+$ cd bootchart
+$ cp pythonchartgui/main.py.in pythonchartgui/main.py
+$ ./pythonchartgui.py bootchart.tgz
+```
+
+References:
+
+* [Alpine boot process on the Raspberry Pi](https://pi3g.com/2019/01/10/alpine-boot-process-on-the-raspberry-pi/)
+* [Bootchart](https://elinux.org/Bootchart)
+
 ## Samba
 
 ### Disable printing
