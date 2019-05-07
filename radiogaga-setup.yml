@@ -1,13 +1,20 @@
 ---
 - name: Setting up radiogaga
   hosts: radiogaga
+
   roles:
     - { role: ssh, tags: ['never', 'ssh'] }
     - { role: base, tags: ['base'] }
     - { role: usbkey, tags: ['usbkey'] }
     - { role: mpd, tags: ['mpd'] }
     - { role: radiogagad, tags: ['radiogagad'] }
+
   tasks:
-    - name: Commit changes
+    - name: Check LBU status
+      command: lbu status
+      tags: always
+      register: lbu
+    - name: Commit LBU changes
       command: lbu commit -d
       tags: always
+      when: lbu.stdout | length > 0
