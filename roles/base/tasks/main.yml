@@ -14,6 +14,12 @@
   include_tasks: firmware.yml
   when: firmware.changed
 
+- name: Enable parallel OpenRC
+  replace:
+    path: /etc/rc.conf
+    regexp: '^(.*)rc_parallel="NO"(.*)$'
+    replace: 'rc_parallel="YES"'
+
 - name: Enable community APK repository
   replace:
     path: /etc/apk/repositories
