@@ -5,7 +5,6 @@
 NAME=radiogagad
 DAEMON=/usr/local/bin/radiogagad
 PID=/var/run/radiogagad.pid
-LOGFILE=/var/log/radiogagad/radiogagad.log
 
 if [ -f /media/USBKEY/mpd/playlists/startup.txt ]; then
     RGGD_STARTUP_PLAYLISTS=$(cat /media/USBKEY/mpd/playlists/startup.txt)
@@ -17,10 +16,6 @@ depend() {
     use mpd
 }
 
-
-start_pre() {
-    checkpath --directory $(dirname ${LOGFILE})
-}
 
 start() {
     ebegin "Starting ${NAME}"
