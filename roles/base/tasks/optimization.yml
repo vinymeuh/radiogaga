@@ -22,3 +22,8 @@
     - "tty4"
     - "tty5"
     - "tty6"
+
+- name: Disable IPv4 DAD
+  file:
+    path: /etc/network/if-up.d/dad
+    mode: "a-x"

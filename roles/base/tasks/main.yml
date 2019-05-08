@@ -22,7 +22,7 @@
 
 - import_tasks: avahi.yml
 - import_tasks: rngd.yml
-- import_tasks: cleaning.yml
+- import_tasks: optimization.yml
 
 # https://bugs.alpinelinux.org/issues/8028
 - name: Workaround for busybox syslogd -Z option broken
