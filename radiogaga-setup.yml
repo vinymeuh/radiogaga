@@ -1,6 +1,6 @@
 ---
 - name: Setting up radiogaga
-  hosts: radiogaga
+  hosts: all
 
   roles:
     - { role: ssh, tags: ['never', 'ssh'] }

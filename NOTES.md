@@ -42,6 +42,7 @@ $ ./pythonchartgui.py bootchart.tgz
 References:
 
 * [Alpine boot process on the Raspberry Pi](https://pi3g.com/2019/01/10/alpine-boot-process-on-the-raspberry-pi/)
+* [Debugging the Alpine boot process](https://pi3g.com/2019/01/22/debugging-the-alpine-boot-process/)
 * [Bootchart](https://elinux.org/Bootchart)
 
 ## Samba

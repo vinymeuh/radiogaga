@@ -40,12 +40,14 @@ setup-alpine -c alpine.anwser
 
 Now it must be possible to connect remotely as root using ssh.
 
-## Manually install Avahi & Python3
+## Manually install Python3 for Ansible
 
 ```
 radiogaga:~# apk update
-radiogaga:~# apk add dbus avahi python3
-radiogaga:~# rc-update add avahi-daemon default
-radiogaga:~# rc-service avahi-daemon start
+radiogaga:~# apk add python3
 radiogaga:~# lbu commit -d
 ```
+
+## Network setup
+
+It is better to use static IP to speed up boot time.

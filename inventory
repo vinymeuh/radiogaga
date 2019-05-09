@@ -1,2 +1,2 @@
-[radiogaga]
-radiogaga.local ansible_ssh_user=root ansible_python_interpreter=/usr/bin/python3
+[all]
+radiogaga ansible_host=radiogaga.local ansible_ssh_user=root ansible_python_interpreter=/usr/bin/python3
