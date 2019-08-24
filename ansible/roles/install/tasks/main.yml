@@ -1,3 +1,6 @@
+- import_tasks: ssh.yml
+  tags: ['never', 'ssh'] 
+
 - name: Install Raspberry Pi support tools
   apk:
     name: raspberrypi
@@ -16,6 +19,12 @@
     path: /etc/apk/repositories
     regexp: '^#(http://.*/v.*/community)'
     replace: '\1'
+  tags: ['base']
+
+- name: Install F2FS tools
+  apk:
+    name: f2fs-tools
+    state: present
   tags: ['base']
 
 - name: Blacklist useless kernel modules
@@ -67,8 +76,14 @@
 - import_tasks: rngd.yml
   tags: ['base']
 
+- import_tasks: samba.yml
+  tags: ['samba']
+
 - import_tasks: mpd.yml
   tags: ['mpd']
+
+- import_tasks: radiogagad.yml
+  tags: ['radiogagad']
 
 # LBU commit must always be the last
 - import_tasks: lbu.yml

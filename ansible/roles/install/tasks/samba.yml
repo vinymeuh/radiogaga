@@ -1,18 +1,13 @@
-- name: Install F2FS tools
-  apk:
-    name: f2fs-tools
-    state: present
-
 - name: Add USBKEY in /etc/fstab
   mount:
     path: /media/USBKEY
     src: LABEL=USBKEY
     fstype: f2fs
     opts: noatime
-    passno: 2
+    passno: "2"
     state: mounted
-
-- name: Install samba
+  
+- name: Install samba package
   apk:
     name: samba-server
     state: present

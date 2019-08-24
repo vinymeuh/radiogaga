@@ -1,6 +1,6 @@
 - name: Copy MyCA certificate
   copy:
-    src: etc/ssh/myca.pub
+    src: myca.pub
     dest: /etc/ssh/myca.pub
     owner: root
     group: root
