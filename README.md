@@ -19,6 +19,7 @@ The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network au
 4. Setup ssh connectivity for Ansible
 
 ```
+~> cd ansible
 ~> ansible-playbook radiogaga-setup.yml -t ssh -k
 ```
 
@@ -27,6 +28,7 @@ Avahi is not install by default by Alpine Linux so it should be necessary to ada
 5. Run the main playbook
 
 ```
+~> cd ansible
 ~> ansible-playbook radiogaga-setup.yml
 ```
 
