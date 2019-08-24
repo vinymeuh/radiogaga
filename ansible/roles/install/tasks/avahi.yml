@@ -1,4 +1,4 @@
-- name: Install Avahi
+- name: Install avahi package
   apk:
     name: avahi
     state: present

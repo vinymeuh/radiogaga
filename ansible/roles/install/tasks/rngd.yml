@@ -1,5 +1,5 @@
 # https://bugs.alpinelinux.org/issues/9960
-- name: Install Hardware Random Number Generator tools
+- name: Install rng-tools package
   apk:
     name: rng-tools
     state: present
