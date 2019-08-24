@@ -5,12 +5,10 @@
   tags: ['base']
 
 # use /opt/vc/bin/vcgencmd installed with raspberrypi package
-- name: Checks if USB boot is enabled
-  include_tasks: usbboot.yml
+- import_tasks: usbboot.yml
   tags: ['base']
 
-- name: Setup Firmware
-  include_tasks: firmware.yml
+- import_tasks: firmware.yml
   tags: ['base']
 
 - name: Enable community APK repository
@@ -63,15 +61,15 @@
   notify: restart syslogd
   tags: ['base']
 
-- name: Install Avahi
-  include_tasks: avahi.yml
+- import_tasks: avahi.yml
   tags: ['base']
 
-- name: Install RNGD
-  include_tasks: rngd.yml
+- import_tasks: rngd.yml
   tags: ['base']
+
+- import_tasks: mpd.yml
+  tags: ['mpd']
 
 # LBU commit must always be the last
-- name: Commit LBU changes
-  include_tasks: lbu.yml
+- import_tasks: lbu.yml
   tags: ['always']

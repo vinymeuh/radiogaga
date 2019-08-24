@@ -3,6 +3,11 @@
     name: avahi-daemon
     state: restarted
 
+- name: restart mpd
+  service:
+    name: mpd
+    state: restarted
+
 - name: restart rngd
   service:
     name: rngd

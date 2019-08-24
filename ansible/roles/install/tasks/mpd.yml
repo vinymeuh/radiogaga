@@ -1,4 +1,4 @@
-- name: Install mpd
+- name: Install mpd package
   apk:
     name: mpd
     state: present
