@@ -1,10 +1,14 @@
 - import_tasks: ssh.yml
   tags: ['never', 'ssh'] 
 
-- name: Install Raspberry Pi support tools
+- name: Install base packages
   apk:
-    name: raspberrypi
+    name: "{{ item }}"
     state: present
+  loop:
+    - raspberrypi
+    - f2fs-tools
+    - rsync       # used by backup role
   tags: ['base']
 
 # use /opt/vc/bin/vcgencmd installed with raspberrypi package
@@ -19,12 +23,6 @@
     path: /etc/apk/repositories
     regexp: '^#(http://.*/v.*/community)'
     replace: '\1'
-  tags: ['base']
-
-- name: Install F2FS tools
-  apk:
-    name: f2fs-tools
-    state: present
   tags: ['base']
 
 - name: Blacklist useless kernel modules

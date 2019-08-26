@@ -1,4 +1,4 @@
-- name: Install radiogaga
+- name: radiogaga install
   hosts: all
 
   roles:
