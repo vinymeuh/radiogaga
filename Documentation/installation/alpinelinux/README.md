@@ -1,4 +1,4 @@
-# Install Alpine Linux for radiogaga
+# Install Alpine Linux on SD Card
 
 This has been written while installing Alpine Linux 3.9.3 on a Raspberry Pi 3 from a macOS computer.
 

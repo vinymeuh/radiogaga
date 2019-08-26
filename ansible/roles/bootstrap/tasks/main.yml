@@ -1,0 +1,34 @@
+- name: Setting facts
+  set_fact:
+    alpine_tarball: "alpine-rpi-{{ bootstrap.alpine_version }}-armv7.tar.gz"
+    alpine_major: "{{ bootstrap.alpine_version.split('.')[0] }}.{{ bootstrap.alpine_version.split('.')[1] }}"
+
+- name: Download Alpine Linux {{ bootstrap.alpine_version }} for Raspberry Pi ARMv7
+  get_url:
+    url: "http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armv7/{{ alpine_tarball }}"
+    dest: "/tmp"
+  tags: ["never", "alpine"]
+
+- name: Extract Alpine Linux on {{ bootstrap.mount_point }}
+  command: tar xzf /tmp/{{ alpine_tarball }} -C "{{ bootstrap.mount_point }}"
+  args:
+    warn: no  # unarchive module not working on macOS
+  tags: ["never", "alpine"]
+
+- name: Restore {{ apkovl }} on {{ bootstrap.mount_point }}
+  copy:
+    src: "{{ apkovl }}"
+    dest: "{{ bootstrap.mount_point }}"
+  when: apkovl is defined and apkovl != ""
+
+#- name: Create minimal apkovl for bootstrap
+- debug:
+    msg: TODO
+  when: apkovl is not defined or apkovl == ""
+
+- name: Restore packages cache from {{ cache }}
+  synchronize:
+    src: "{{ cache }}"
+    dest: "{{ bootstrap.mount_point }}"
+    mode: pull
+  when: cache is defined and cache != ""

@@ -9,5 +9,5 @@ The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network au
 ### About radiogaga
 
 - [Installation](Documentation/installation)
-  - [Alpine Linux](Documentation/installation/alpinelinux)
+  - [Install Alpine Linux on SD Card](Documentation/installation/alpinelinux)
 
