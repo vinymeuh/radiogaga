@@ -1,3 +1,7 @@
 bootstrap:
   alpine_version: "3.9.3"
   mount_point: "/Volumes/RADIOGAGA"
+  restore:
+    apkovl: "backups/radiogaga/radiogaga.apkovl.tar.gz"
+    usercfg: "backups/radiogaga/usercfg.txt"
+    cache: "backups/radiogaga/cache"

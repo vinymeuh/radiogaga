@@ -1,0 +1,13 @@
+- name: Restore files on {{ bootstrap.mount_point }}
+  copy:
+    src: "{{ item }}"
+    dest: "{{ bootstrap.mount_point | mandatory }}"
+  loop:
+    - "{{ bootstrap.restore.apkovl | mandatory }}"
+    - "{{ bootstrap.restore.usercfg | mandatory }}"
+
+- name: Restore packages cache directory from {{ bootstrap.restore.cache }}
+  synchronize:
+    src: "{{ bootstrap.restore.cache | mandatory }}"
+    dest: "{{ bootstrap.mount_point | mandatory }}"
+    mode: pull
