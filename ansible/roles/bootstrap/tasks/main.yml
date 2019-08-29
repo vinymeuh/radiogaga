@@ -24,5 +24,8 @@
   when: not start_elf.stat.exists
   tags: ["always"]
 
+- import_tasks: initialize.yml
+  tags: ["never", "initialize"]
+
 - import_tasks: restore.yml
   tags: ["never", "restore"]
