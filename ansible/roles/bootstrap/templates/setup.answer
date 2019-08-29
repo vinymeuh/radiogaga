@@ -1,6 +1,6 @@
 KEYMAPOPTS="us us"
 
-HOSTNAMEOPTS="-n radiogaga"
+HOSTNAMEOPTS="-n {{ bootstrap.initialize.hostname | mandatory }}"
 
 # Contents of /etc/network/interfaces
 INTERFACESOPTS="auto lo
@@ -8,7 +8,7 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
-    hostname radiogaga
+    hostname {{ bootstrap.initialize.hostname | mandatory }}
 "
 
 TIMEZONEOPTS="-z Europe/Paris"

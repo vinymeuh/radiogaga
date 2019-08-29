@@ -61,6 +61,10 @@
     src: "{{ tempfile.path }}/{{ bootstrap.initialize.hostname | mandatory }}.apkovl.tar.gz"
     dest: "{{ bootstrap.mount_point | mandatory }}"
 
+- name: Copy setup-alpine answer file on {{ bootstrap.mount_point }}
+  template:
+    src: setup.answer
+    dest: "{{ bootstrap.mount_point | mandatory }}"
 
 - name: Delete staging directory
   file:
