@@ -3,3 +3,4 @@ bootstrap:
   mount_point: "/Volumes/RADIOTEST"
   initialize:
     hostname: "radiotest"
+    use_dhcp: true

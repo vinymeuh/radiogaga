@@ -1,3 +1,7 @@
+- name: Setting facts
+  set_fact:
+    use_dhcp: "{{ bootstrap.initialize.use_dhcp | mandatory }}"
+
 - name: Create staging directory
   tempfile:
     state: directory
@@ -26,9 +30,14 @@
     - etc/hostname
     - etc/hosts
     - { file: etc/init.d/bootstrap-sshd, mode: "0755"}
-    - etc/network/interfaces
     - etc/ssh/myca.pub
     - etc/ssh/sshd_config
+
+- import_tasks: network_dhcp.yml
+  when: use_dhcp
+
+- import_tasks: network_static.yml
+  when: not use_dhcp
 
 - name: Create symbolic links
   file:
