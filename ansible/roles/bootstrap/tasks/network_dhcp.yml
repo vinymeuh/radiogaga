@@ -1,5 +1,5 @@
 - name: Setup network for DHCP
   template:
     src: etc/network/interfaces_dhcp
-    dest: "{{ tempfile.path }}/etc/network/interfaces }}"
+    dest: "{{ tempfile.path }}/etc/network/interfaces"
     mode: "0644"
