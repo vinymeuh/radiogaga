@@ -1,0 +1,6 @@
+bootstrap:
+  alpine_version: "3.9.3"
+  mount_point: "/Volumes/RADIOTEST"
+  initialize:
+    hostname: "radiotest"
+    use_dhcp: true

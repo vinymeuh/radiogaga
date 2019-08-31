@@ -1,0 +1,24 @@
+- name: Check current firmware configuration
+  copy:
+    src: usercfg.txt
+    dest: /media/mmcblk0p1/usercfg.txt
+  check_mode: true
+  register: firmware
+
+- name: Remount SD card RW
+  command: mount -o remount,rw /media/mmcblk0p1
+  args:
+    warn: no
+  when: firmware.changed
+
+- name: Copy usercfg.txt on SD card
+  copy:
+    src: usercfg.txt
+    dest: /media/mmcblk0p1/usercfg.txt
+  when: firmware.changed
+
+- name: Remount SD card RO
+  command: mount -o remount,ro /media/mmcblk0p1
+  args:
+    warn: no
+  when: firmware.changed

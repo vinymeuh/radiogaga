@@ -1,0 +1,13 @@
+- name: Copy MyCA certificate
+  copy:
+    src: myca.pub
+    dest: /etc/ssh/myca.pub
+    owner: root
+    group: root
+    mode: 0444
+
+- name: Add MyCA as a trusted authority for sshd
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: 'TrustedUserCAKeys /etc/ssh/myca.pub'
+  notify: reload sshd

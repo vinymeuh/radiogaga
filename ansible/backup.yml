@@ -1,0 +1,5 @@
+- name: radiogaga backup
+  hosts: all
+
+  roles:
+    - backup

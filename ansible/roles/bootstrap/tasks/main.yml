@@ -1,0 +1,31 @@
+- name: Setting facts
+  set_fact:
+    alpine_tarball: "alpine-rpi-{{ bootstrap.alpine_version | mandatory }}-armv7.tar.gz"
+    alpine_major: "{{ bootstrap.alpine_version.split('.')[0] }}.{{ bootstrap.alpine_version.split('.')[1] }}"
+  tags: ["always"]
+
+- name: Check if Alpine Linux seems to be already installed
+  stat:
+    path: "{{ bootstrap.mount_point | mandatory }}/start.elf"
+  register: start_elf
+  tags: ["always"]
+
+- name: Download Alpine Linux {{ bootstrap.alpine_version }} for Raspberry Pi ARMv7
+  get_url:
+    url: "http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armv7/{{ alpine_tarball }}"
+    dest: "/tmp"
+  when: not start_elf.stat.exists
+  tags: ["always"]
+
+- name: Extract Alpine Linux on {{ bootstrap.mount_point }}
+  command: tar xzf /tmp/{{ alpine_tarball }} -C "{{ bootstrap.mount_point }}"
+  args:
+    warn: no  # unarchive module not working on macOS
+  when: not start_elf.stat.exists
+  tags: ["always"]
+
+- import_tasks: initialize.yml
+  tags: ["never", "initialize"]
+
+- import_tasks: restore.yml
+  tags: ["never", "restore"]

@@ -1,0 +1,12 @@
+# https://bugs.alpinelinux.org/issues/9960
+- name: Install rng-tools package
+  apk:
+    name: rng-tools
+    state: present
+
+- name: Enable rngd
+  service:
+    name: rngd
+    enabled: yes
+    runlevel: sysinit   # feed random data earliest in boot
+  notify: restart rngd

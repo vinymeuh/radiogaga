@@ -1,0 +1,21 @@
+HOSTNAMEOPTS="-n {{ bootstrap.initialize.hostname | mandatory }}"
+
+# Contents of /etc/network/interfaces
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+    hostname {{ bootstrap.initialize.hostname | mandatory }}
+"
+
+TIMEZONEOPTS="-z Europe/Paris"
+
+APKREPOSOPTS="-1"
+
+SSHDOPTS="-c openssh"
+
+NTPOPTS="-c chrony"
+
+LBUOPTS="/media/mmcblk0p1"
+APKCACHEOPTS="/media/mmcblk0p1/cache"

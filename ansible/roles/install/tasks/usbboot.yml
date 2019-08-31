@@ -1,0 +1,11 @@
+- name: Retrieves value for OTP register 17
+  shell: /opt/vc/bin/vcgencmd otp_dump | grep 17
+  args:
+    warn: no
+  register: usbboot
+  changed_when: False
+
+- name: Fails if USB boot is not enabled
+  fail:
+    msg: USB boot is not enabled, see ...
+  when: usbboot.stdout != "17:1020000a"

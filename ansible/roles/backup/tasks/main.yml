@@ -1,0 +1,16 @@
+- name: Create local backup directory
+  file:
+    path: "backups"
+    state: directory
+  delegate_to: localhost
+
+- name: Backup
+  synchronize:
+    src: "{{ item }}"
+    dest: "backups/{{ inventory_hostname }}/"
+    mode: pull
+  loop:
+    - /etc/alpine-release
+    - /media/mmcblk0p1/radiogaga.apkovl.tar.gz
+    - /media/mmcblk0p1/usercfg.txt
+    - /media/mmcblk0p1/cache
