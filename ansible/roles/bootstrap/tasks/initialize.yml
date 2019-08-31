@@ -1,6 +1,6 @@
 - name: Setting facts
   set_fact:
-    use_dhcp: "{{ bootstrap.initialize.use_dhcp | mandatory }}"
+    use_dhcp: "{{ bootstrap.initialize.use_dhcp | mandatory | bool }}"
 
 - name: Create staging directory
   tempfile:
