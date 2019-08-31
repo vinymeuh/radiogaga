@@ -1,5 +1,3 @@
-KEYMAPOPTS="us us"
-
 HOSTNAMEOPTS="-n {{ bootstrap.initialize.hostname | mandatory }}"
 
 # Contents of /etc/network/interfaces
@@ -13,9 +11,11 @@ iface eth0 inet dhcp
 
 TIMEZONEOPTS="-z Europe/Paris"
 
-APKREPOSOPTS="-f"
+APKREPOSOPTS="-1"
 
 SSHDOPTS="-c openssh"
+
 NTPOPTS="-c chrony"
 
-LBU_MEDIA="mmcblk0p1"
+LBUOPTS="/media/mmcblk0p1"
+APKCACHEOPTS="/media/mmcblk0p1/cache"
