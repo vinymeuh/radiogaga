@@ -23,7 +23,7 @@
   notify: restart radiogagad  
 
 - name: Copy radiogagad init.d script
-  copy:
+  template:
     src: radiogagad.service
     dest: /etc/init.d/radiogagad
     mode: 0755

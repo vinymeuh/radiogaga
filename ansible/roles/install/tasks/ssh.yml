@@ -1,5 +1,5 @@
 - name: Copy MyCA certificate
-  copy:
+  template:
     src: myca.pub
     dest: /etc/ssh/myca.pub
     owner: root

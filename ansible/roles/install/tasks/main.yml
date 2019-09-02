@@ -1,5 +1,10 @@
+- name: Setting facts
+  set_fact:
+    usbkey_mount_path: "{{ bootstrap.initialize.usbkey_mount_path | mandatory }}"
+  tags: ["always"]
+
 - import_tasks: ssh.yml
-  tags: ['never', 'ssh'] 
+  tags: ['ssh'] 
 
 - name: Install base packages
   apk:
@@ -26,7 +31,7 @@
   tags: ['base']
 
 - name: Blacklist useless kernel modules
-  copy:
+  template:
     src: radiogaga_blacklist.conf
     dest: /etc/modprobe.d/radiogaga_blacklist.conf
   tags: ['base']

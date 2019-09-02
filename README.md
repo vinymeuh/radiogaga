@@ -70,7 +70,7 @@ We should be able to connect remotely as root using ssh to finish the Alpine set
 
 ```
 radiogaga:~# cd /media/mmcblk0p1
-radiogaga:~# setup-alpine -f setup.anwser
+radiogaga:~# setup-alpine -f setup.answer
 # Accepts all defaults choices
 radiogaga:~# rm /etc/runlevels/default/bootstrap-sshd
 radiogaga:~# apk update

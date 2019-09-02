@@ -3,8 +3,14 @@
     name: avahi
     state: present
 
+- name: Remove useless start dependency with dbus
+  lineinfile:
+    path: /etc/init.d/avahi-daemon
+    regexp: 'need dbus'
+    state: absent
+
 - name: Copy avahi-daemon.conf
-  copy:
+  template:
     src: avahi-daemon.conf
     dest: /etc/avahi/avahi-daemon.conf
     mode: 0644

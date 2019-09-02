@@ -10,7 +10,7 @@
   notify: restart mpd
 
 - name: Copy mpd.conf
-  copy:
+  template:
     src: mpd.conf
     dest: /etc/mpd.conf
     owner: mpd

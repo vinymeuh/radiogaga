@@ -1,5 +1,5 @@
 - name: Check current firmware configuration
-  copy:
+  template:
     src: usercfg.txt
     dest: /media/mmcblk0p1/usercfg.txt
   check_mode: true
@@ -12,7 +12,7 @@
   when: firmware.changed
 
 - name: Copy usercfg.txt on SD card
-  copy:
+  template:
     src: usercfg.txt
     dest: /media/mmcblk0p1/usercfg.txt
   when: firmware.changed

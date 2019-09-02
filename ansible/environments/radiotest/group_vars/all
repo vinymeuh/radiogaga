@@ -1,6 +1,8 @@
 bootstrap:
-  alpine_version: "3.9.3"
+  alpine_version: "3.10.2"
+  arch: "armv7"   # RPi 2B v1.1 can't use aarch64
   mount_point: "/Volumes/RADIOTEST"
   initialize:
     hostname: "radiotest"
     use_dhcp: true
+    usbkey_mount_path: "/media/USBKEY"

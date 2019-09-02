@@ -1,6 +1,6 @@
 - name: Add USBKEY in /etc/fstab
   mount:
-    path: /media/USBKEY
+    path: "{{ usbkey_mount_path }}"
     src: LABEL=USBKEY
     fstype: f2fs
     opts: noatime
@@ -19,7 +19,7 @@
   notify: restart samba
 
 - name: Copy smb.conf
-  copy:
+  template:
     src: smb.conf
     dest: /etc/samba/smb.conf
     mode: 0644
@@ -33,7 +33,7 @@
   notify: restart samba
 
 - name: Enable Avahi service for Samba
-  copy:
+  template:
     src: smb.service
     dest: /etc/avahi/services/smb.service
     mode: 0644
