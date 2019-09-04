@@ -28,7 +28,7 @@
     name: sshd
     state: reloaded
 
-- name: restart syslogd
+- name: restart syslog
   service:
     name: syslog
     state: restarted

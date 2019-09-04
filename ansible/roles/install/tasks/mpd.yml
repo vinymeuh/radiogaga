@@ -20,7 +20,7 @@
 
 - name: Create a directory for mpd on USBKEY
   file:
-    path: /media/USBKEY/mpd
+    path: "{{ usbkey_mount_path }}/mpd"
     state: directory
     owner: mpd
     group: audio
@@ -34,5 +34,19 @@
     group: audio
     mode: 0777
   with_items:
-    - /media/USBKEY/mpd/music
-    - /media/USBKEY/mpd/playlists
+    - "{{ usbkey_mount_path }}/mpd/music"
+    - "{{ usbkey_mount_path }}/mpd/playlists"
+
+- name: Check if file mpd.db exists
+  stat:
+    path: "{{ usbkey_mount_path }}/mpd/mpd.db"
+  register: mpddb
+
+- name: Fix attributes on file mpd.db
+  file:
+    path: "{{ usbkey_mount_path }}/mpd/mpd.db"
+    state: file
+    owner: mpd
+    group: audio
+    mode: 0644
+  when: mpddb.stat.exists == true

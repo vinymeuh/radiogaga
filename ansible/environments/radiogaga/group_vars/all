@@ -1,12 +1,17 @@
 bootstrap:
-  alpine_version: "3.9.3"
+  alpine_version: "3.10.2"
+  arch: "armv7"
   mount_point: "/Volumes/RADIOGAGA"
+  
   initialize:
     hostname: "radiogaga"
+    domainname: "home"
     use_dhcp: false
     ip: 192.168.1.4
     netmask: 255.255.255.0
     gateway: 192.168.1.1
+    usbkey_mount_path: "/media/USBKEY"
+
   restore:
     apkovl: "backups/radiogaga/radiogaga.apkovl.tar.gz"
     usercfg: "backups/radiogaga/usercfg.txt"

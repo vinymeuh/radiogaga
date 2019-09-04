@@ -64,6 +64,14 @@
     mode: "a-x"
   tags: ['base']
 
+
+- name: Enable syslog service
+  service:
+    name: syslog
+    enabled: yes
+  notify: restart syslog
+  tags: ['base']
+
 # https://bugs.alpinelinux.org/issues/8028
 - name: Workaround for busybox syslogd -Z option broken
   replace:
