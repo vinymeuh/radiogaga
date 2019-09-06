@@ -81,11 +81,11 @@
   notify: restart syslogd
   tags: ['base']
 
-- import_tasks: avahi.yml
-  tags: ['base']
-
 - import_tasks: rngd.yml
   tags: ['base']
+
+- import_tasks: avahi.yml
+  tags: ['base', 'avahi']
 
 - import_tasks: samba.yml
   tags: ['samba']

@@ -6,8 +6,20 @@
 - name: Remove useless start dependency with dbus
   lineinfile:
     path: /etc/init.d/avahi-daemon
-    regexp: 'need dbus'
+    regexp: '.*need dbus.*'
     state: absent
+  notify: restart avahi
+
+- name: Remove useless start dependency with dbus
+  block:
+    - name: Fix /etc/init.d/avahi-daemon
+      lineinfile:
+        path: /etc/init.d/avahi-daemon
+        regexp: '.*need dbus.*'
+        state: absent
+      notify: restart avahi
+    - name: Add /etc/init.d/avahi-daemon to LBU included files
+      command: lbu add /etc/init.d/avahi-daemon
 
 - name: Copy avahi-daemon.conf
   template:
