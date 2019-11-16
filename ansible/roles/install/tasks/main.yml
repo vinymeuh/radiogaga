@@ -17,10 +17,6 @@
     - rsync       # used by backup role
   tags: ['base']
 
-# use /opt/vc/bin/vcgencmd installed with raspberrypi package
-- import_tasks: usbboot.yml
-  tags: ['base']
-
 - import_tasks: firmware.yml
   tags: ['base']
 
