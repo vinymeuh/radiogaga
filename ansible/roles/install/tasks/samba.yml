@@ -1,12 +1,3 @@
-- name: Add USBKEY in /etc/fstab
-  mount:
-    path: "{{ usbkey_mount_path }}"
-    src: LABEL=USBKEY
-    fstype: f2fs
-    opts: noatime
-    passno: "2"
-    state: mounted
-  
 - name: Install samba package
   apk:
     name: samba-server

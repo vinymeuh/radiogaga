@@ -1,6 +1,7 @@
 - name: Setting facts
   set_fact:
-    usbkey_mount_path: "{{ bootstrap.initialize.usbkey_mount_path | mandatory }}"
+    usbkey_label: "{{ bootstrap.initialize.usbkey_label | default('USBKEY') }}"
+    usbkey_mount_path: "{{ bootstrap.initialize.usbkey_mount_path | default('/media/USBKEY') }}"
   tags: ["always"]
 
 - import_tasks: ssh.yml
@@ -64,7 +65,6 @@
     mode: "a-x"
   tags: ['base']
 
-
 - name: Enable syslog service
   service:
     name: syslog
@@ -80,6 +80,15 @@
     replace: 'SYSLOGD_OPTS="\1\2"'
   notify: restart syslogd
   tags: ['base']
+
+- name: Add USB key in /etc/fstab
+  mount:
+    path: "{{ usbkey_mount_path }}"
+    src: "LABEL={{ usbkey_label }}"
+    fstype: f2fs
+    opts: noatime
+    passno: "2"
+    state: mounted
 
 - import_tasks: rngd.yml
   tags: ['base']
