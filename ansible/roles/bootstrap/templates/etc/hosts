@@ -1,2 +1,2 @@
-127.0.0.1   {{ bootstrap.initialize.hostname | mandatory }}.my.domain {{ bootstrap.initialize.hostname | mandatory }} localhost.localdomain localhost
+127.0.0.1   {{ hostname }}.{{ domainname }} {{ hostname }} localhost.localdomain localhost
 ::1	    localhost localhost.localdomain

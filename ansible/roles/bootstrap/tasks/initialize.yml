@@ -1,5 +1,7 @@
 - name: Setting facts
   set_fact:
+    hostname: "{{ bootstrap.initialize.hostname | mandatory }}"
+    domainname: "{{ bootstrap.initialize.domainname | mandatory }}"
     use_dhcp: "{{ bootstrap.initialize.use_dhcp | mandatory | bool }}"
 
 - name: Create staging directory
@@ -60,20 +62,20 @@
     - { dest: "etc/runlevels/sysinit/modloop", src: "/etc/init.d/modloop" }
 
 - name: Create overlay file
-  command: gnutar czf {{ bootstrap.initialize.hostname | mandatory }}.apkovl.tar.gz --owner=0 --group=0 etc
+  command: gnutar czf {{ hostname }}.apkovl.tar.gz --owner=0 --group=0 etc
   args:
     chdir: "{{ tempfile.path }}"
     warn: no
 
-- name: Copy overlay file on {{ bootstrap.mount_point }}
+- name: Copy overlay file on {{ mount_point }}
   copy:
-    src: "{{ tempfile.path }}/{{ bootstrap.initialize.hostname | mandatory }}.apkovl.tar.gz"
-    dest: "{{ bootstrap.mount_point | mandatory }}"
+    src: "{{ tempfile.path }}/{{ hostname }}.apkovl.tar.gz"
+    dest: "{{ mount_point | mandatory }}"
 
-- name: Copy setup-alpine answer file on {{ bootstrap.mount_point }}
+- name: Copy setup-alpine answer file on {{ mount_point }}
   template:
     src: setup.answer
-    dest: "{{ bootstrap.mount_point | mandatory }}"
+    dest: "{{ mount_point | mandatory }}"
 
 - name: Delete staging directory
   file:

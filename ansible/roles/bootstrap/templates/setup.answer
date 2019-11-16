@@ -1,4 +1,4 @@
-HOSTNAMEOPTS="-n {{ bootstrap.initialize.hostname | mandatory }}"
+HOSTNAMEOPTS="-n {{ hostname }}"
 
 {% if bootstrap.initialize.use_dhcp == true %}
 INTERFACESOPTS="auto lo
@@ -6,7 +6,7 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
-    hostname {{ bootstrap.initialize.hostname | mandatory }}
+    hostname {{ hostname }}
 "
 {% else %}
 INTERFACESOPTS="auto lo
@@ -19,7 +19,7 @@ iface eth0 inet static
     gateway {{ bootstrap.initialize.gateway | mandatory }}
 "
 
-DNSOPTS="-d {{ bootstrap.initialize.domainname | mandatory }} {{ bootstrap.initialize.gateway | mandatory }}"
+DNSOPTS="-d {{ domainname }} {{ bootstrap.initialize.gateway | mandatory }}"
 {% endif %}
 
 TIMEZONEOPTS="-z Europe/Paris"

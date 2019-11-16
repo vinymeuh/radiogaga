@@ -1,24 +1,32 @@
-- name: Setting facts
+- name: Setting facts (phase 1)
   set_fact:
-    alpine_tarball: "alpine-rpi-{{ bootstrap.alpine_version | mandatory }}-{{ bootstrap.arch | mandatory }}.tar.gz"
-    alpine_major: "{{ bootstrap.alpine_version.split('.')[0] }}.{{ bootstrap.alpine_version.split('.')[1] }}"
+    alpine_version: "{{ bootstrap.alpine_version | mandatory }}"
+    alpine_arch: "{{ bootstrap.arch | mandatory }}"
+    mount_point: "{{ bootstrap.mount_point | mandatory }}"
+    trusted_ca_key: "{{ bootstrap.trusted_ca_key | mandatory }}"
+  tags: ["always"]
+
+- name: Setting facts (phase 2)
+  set_fact:
+    alpine_tarball: "alpine-rpi-{{ alpine_version }}-{{ alpine_arch }}.tar.gz"
+    alpine_major: "{{ alpine_version.split('.')[0] }}.{{ alpine_version.split('.')[1] }}"
   tags: ["always"]
 
 - name: Check if Alpine Linux seems to be already installed
   stat:
-    path: "{{ bootstrap.mount_point | mandatory }}/start.elf"
+    path: "{{ mount_point }}/start.elf"
   register: start_elf
   tags: ["always"]
 
-- name: Download Alpine Linux {{ bootstrap.alpine_version }} for {{ bootstrap.arch | mandatory }}
+- name: Download Alpine Linux {{ alpine_version }} for {{ alpine_arch }}
   get_url:
-    url: "http://dl-cdn.alpinelinux.org/alpine/v{{ alpine_major }}/releases/{{ bootstrap.arch }}/{{ alpine_tarball }}"
+    url: "http://dl-cdn.alpinelinux.org/alpine/v{{ alpine_major }}/releases/{{ alpine_arch }}/{{ alpine_tarball }}"
     dest: "/tmp"
   when: not start_elf.stat.exists
   tags: ["always"]
 
-- name: Extract Alpine Linux on {{ bootstrap.mount_point }}
-  command: tar xzf /tmp/{{ alpine_tarball }} -C "{{ bootstrap.mount_point }}"
+- name: Extract Alpine Linux on {{ mount_point }}
+  command: tar xzf /tmp/{{ alpine_tarball }} -C "{{ mount_point }}"
   args:
     warn: no  # unarchive module not working on macOS
   when: not start_elf.stat.exists

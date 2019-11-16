@@ -1,1 +1,1 @@
-{{ bootstrap.initialize.hostname | mandatory }}
+{{ hostname }}
