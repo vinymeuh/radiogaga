@@ -88,6 +88,18 @@ radiogaga | SUCCESS => {"changed": false,"ping": "pong"}
 
 If everything is fine the harder is done :champagne:.
 
+### USB Key
+
+Thanks to Alpine Linux the SD Card is mounted read only. To store MPD database and a large music collection, a USB key is used to be mounted read-write.
+
+The USB key preparation is not integrated in playbooks and have to be done manually.
+
+I choose to format the key with F2FS, see [a presentation of F2FS (in french)](https://korben.info/f2fs-systeme-de-fichiers-pense-raspberry-pi-linstaller.html).
+
+```
+mkfs.f2fs -l USBKEY /dev/sda
+```
+
 ### Finish installation
 
 All remaining tasks are handled by the playbook **install.yml**.
