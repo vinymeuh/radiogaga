@@ -4,9 +4,6 @@
     usbkey_mount_path: "{{ bootstrap.initialize.usbkey_mount_path | default('/media/USBKEY') }}"
   tags: ["always"]
 
-- import_tasks: ssh.yml
-  tags: ['ssh'] 
-
 - name: Install base packages
   apk:
     name: "{{ item }}"
@@ -14,7 +11,7 @@
   loop:
     - raspberrypi
     - f2fs-tools
-    - rsync       # used by backup role
+    - rsync       # used for backups
   tags: ['base']
 
 - import_tasks: firmware.yml
