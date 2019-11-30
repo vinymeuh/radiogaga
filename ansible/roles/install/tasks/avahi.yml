@@ -21,7 +21,7 @@
     - name: Add /etc/init.d/avahi-daemon to LBU included files
       command: lbu add /etc/init.d/avahi-daemon
 
-- name: Copy avahi-daemon.conf
+- name: Copy /etc/avahi/avahi-daemon.conf
   template:
     src: avahi-daemon.conf
     dest: /etc/avahi/avahi-daemon.conf
