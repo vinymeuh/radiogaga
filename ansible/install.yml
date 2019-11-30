@@ -1,5 +1,0 @@
-- name: radiogaga install
-  hosts: all
-
-  roles:
-    - install
