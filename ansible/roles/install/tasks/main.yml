@@ -1,9 +1,10 @@
 - name: Setting facts
   set_fact:
     hostname: "{{ hostname | default(ansible_hostname) }}"
+    dac: "{{ dac | mandatory }}"
     usbkey_enabled: "{{ usbkey_enabled | default(true) | bool }}"
     usbkey_label: "{{ usbkey_label | default('') }}"
-    usbkey_mount_path: "{{ usbkey_mount_path | default('') }}"
+    usbkey_mnt: "{{ usbkey_mnt | default('') }}"
   tags: ["always"]
 
 - name: Enable community APK repository
@@ -65,8 +66,8 @@
 - import_tasks: syslog.yml
   tags: ['base']
 
-# - import_tasks: firmware.yml
-#   tags: ['base']
+- import_tasks: firmware.yml
+  tags: ['base']
 
 
 

@@ -1,0 +1,4 @@
+dac: "SabreES9023"
+
+usbkey_label: "USBKEY128G"
+usbkey_mnt: "/media/USBKEY"
