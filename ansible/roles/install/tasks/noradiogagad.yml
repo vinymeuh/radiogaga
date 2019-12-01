@@ -1,0 +1,4 @@
+- name: Install mpc package
+  apk:
+    name: mpc
+    state: present

@@ -95,9 +95,23 @@
   when: usbkey_enabled == true
   tags: ['mpd']
 
+- import_tasks: noradiogagad.yml
+  when: radiogagad_enabled == false
+  tags: ['mpd']
+
 - import_tasks: radiogagad.yml
   when: radiogagad_enabled == true
   tags: ['radiogagad']
+
+- name: Copy playlists files
+  template:
+    src: playlist.m3u
+    dest: "{{ mpd_rootdir }}/playlists/{{ item.file }}"
+    owner: mpd
+    group: audio
+    mode: 0644
+  loop: "{{ playlists }}"
+  tags: ['playlists']
 
 # LBU commit must always be the last
 - import_tasks: lbu.yml

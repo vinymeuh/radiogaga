@@ -2,3 +2,7 @@ dac: "Hifiberry2"
 
 usbkey_enabled: false
 radiogagad_enabled: false
+
+playlists:
+  - {file: "europe1.m3u", name: "Europe 1", url: "http://mp3lg3.scdn.arkena.com/10489/europe1.mp3"}
+  - {file: "rtl.m3u", name: "RTL", url: "http://streaming.radio.rtl.fr/rtl-1-48-192"}
