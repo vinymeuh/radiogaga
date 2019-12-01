@@ -71,10 +71,35 @@
     mode: "a-x"
   tags: ['base']
 
-- import_tasks: rngd.yml
+# https://bugs.alpinelinux.org/issues/9960
+- name: rngd
+  block:
+    - name: Install rng-tools package
+      apk:
+        name: rng-tools
+        state: present
+    - name: Enable rngd
+      service:
+        name: rngd
+        enabled: yes
+        runlevel: sysinit   # feed random data earliest in boot
+      notify: restart rngd
   tags: ['base']
 
-- import_tasks: syslog.yml
+- name: syslog
+  block:
+    - name: Enable syslog service
+      service:
+        name: syslog
+        enabled: yes
+      notify: restart syslog
+    # https://bugs.alpinelinux.org/issues/8028
+    - name: Workaround for busybox syslogd -Z option broken
+      replace:
+        path: /etc/conf.d/syslog
+        regexp: '^SYSLOGD_OPTS="(.*)-Z(.*)"'
+        replace: 'SYSLOGD_OPTS="\1\2"'
+      notify: restart syslog
   tags: ['base']
 
 - import_tasks: firmware.yml
