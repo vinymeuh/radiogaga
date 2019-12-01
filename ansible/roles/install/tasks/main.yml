@@ -2,9 +2,17 @@
   set_fact:
     hostname: "{{ hostname | default(ansible_hostname) }}"
     dac: "{{ dac | mandatory }}"
+    radiogagad_enabled: "{{ radiogagad_enabled | default(true) | bool }}"
     usbkey_enabled: "{{ usbkey_enabled | default(true) | bool }}"
     usbkey_label: "{{ usbkey_label | default('') }}"
     usbkey_mnt: "{{ usbkey_mnt | default('') }}"
+    mpd_rootdir: "/etc/mpd"
+  tags: ["always"]
+
+- name: Setting mpd root directory on usbkey
+  set_fact:
+    mpd_rootdir: "{{ usbkey_mnt }}/mpd"
+  when: usbkey_enabled == true 
   tags: ["always"]
 
 - name: Enable community APK repository
@@ -57,7 +65,10 @@
     - blacklist vc_sm_cma
   tags: ['base']
 
-- import_tasks: avahi.yml
+- name: Disable IPv4 Duplicate Address Detection
+  file:
+    path: /etc/network/if-up.d/dad
+    mode: "a-x"
   tags: ['base']
 
 - import_tasks: rngd.yml
@@ -69,35 +80,24 @@
 - import_tasks: firmware.yml
   tags: ['base']
 
+- import_tasks: mpd.yml
+  tags: ['mpd']
 
+- import_tasks: avahi.yml
+  when: usbkey_enabled == true
+  tags: ['mpd']
 
-# - name: Disable IPv4 DAD
-#   file:
-#     path: /etc/network/if-up.d/dad
-#     mode: "a-x"
-#   tags: ['base']
+- import_tasks: usbkey.yml
+  when: usbkey_enabled == true
+  tags: ['mpd']
 
-# - name: Add USB key in /etc/fstab
-#   mount:
-#     path: "{{ usbkey_mount_path }}"
-#     src: "LABEL={{ usbkey_label }}"
-#     fstype: f2fs
-#     opts: noatime
-#     passno: "2"
-#     state: mounted
+- import_tasks: samba.yml
+  when: usbkey_enabled == true
+  tags: ['mpd']
 
-
-
-
-
-# - import_tasks: samba.yml
-#   tags: ['samba']
-
-# - import_tasks: mpd.yml
-#   tags: ['mpd']
-
-# - import_tasks: radiogagad.yml
-#   tags: ['radiogagad']
+- import_tasks: radiogagad.yml
+  when: radiogagad_enabled == true
+  tags: ['radiogagad']
 
 # LBU commit must always be the last
 - import_tasks: lbu.yml

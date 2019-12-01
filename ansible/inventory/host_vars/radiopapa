@@ -1,3 +1,4 @@
 dac: "Hifiberry2"
 
 usbkey_enabled: false
+radiogagad_enabled: false
