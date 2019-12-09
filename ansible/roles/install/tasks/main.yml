@@ -53,6 +53,13 @@
     - "tty6"
   tags: ['base']
 
+- name: Enable parallel boot
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^rc_parallel='
+    line: 'rc_parallel=YES'
+  tags: ['base']
+
 - name: Blacklist video related modules
   lineinfile:
     path: /etc/modprobe.d/radiogaga_blacklist.conf
