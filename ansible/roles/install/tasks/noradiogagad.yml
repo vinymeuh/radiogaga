@@ -2,3 +2,17 @@
   apk:
     name: mpc
     state: present
+
+- name: Copy mpd-starter init.d script
+  template:
+    src: mpd-starter.service
+    dest: /etc/init.d/mpd-starter
+    mode: 0755
+
+- name: Add mpd-starter init.d script to LBU included files
+  command: lbu add /etc/init.d/mpd-starter
+
+- name: Enable mpd-starter
+  service:
+    name: mpd-starter
+    enabled: yes

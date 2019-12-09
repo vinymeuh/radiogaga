@@ -28,7 +28,7 @@ start() {
 }
 
 stop() {
-	ebegin "Stopping ${NAME}"
+    ebegin "Stopping ${NAME}"
     start-stop-daemon --stop --pidfile ${PID}
-	eend $?
+    eend $?
 }
