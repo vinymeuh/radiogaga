@@ -16,20 +16,19 @@ start() {
         sleep 3
     done
 
-    PLAYLISTS=$(mpc -h $MPD_SOCKET lsplaylists)
-    for pl in $PLAYLISTS
+    mpc -q -h $MPD_SOCKET lsplaylists | sort | while read pl
     do
-        mpc -h $MPD_SOCKET load "$pl"
-        mpc -h $MPD_SOCKET play
-        sleep 2
-        CURRENT=$(mpc -h $MPD_SOCKET current)
+        mpc -q -h $MPD_SOCKET load "$pl"
+        mpc -q -h $MPD_SOCKET play
+        sleep 10
+        CURRENT=$(mpc -q -h $MPD_SOCKET current)
         if [ ! -z "$CURRENT" ] ; then
             break
         fi
-        mpc -h $MPD_SOCKET clear
+        mpc -q -h $MPD_SOCKET clear
     done
 
-    CURRENT=$(mpc -h $MPD_SOCKET current)
+    CURRENT=$(mpc -q -h $MPD_SOCKET current)
     if [ -z "$CURRENT" ]; then
         eend 1
     else
@@ -39,7 +38,7 @@ start() {
 
 stop() {
     ebegin "Stopping ${NAME}"
-    mpc -h $MPD_SOCKET stop
-    mpc -h $MPD_SOCKET clear
+    mpc -q -h $MPD_SOCKET stop
+    mpc -q -h $MPD_SOCKET clear
     eend 0
 }
