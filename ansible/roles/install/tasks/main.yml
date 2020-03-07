@@ -2,11 +2,12 @@
   set_fact:
     hostname: "{{ hostname | default(ansible_hostname) }}"
     dac: "{{ dac | mandatory }}"
+    mpd_rootdir: "/etc/mpd"
     radiogagad_enabled: "{{ radiogagad_enabled | default(true) | bool }}"
+    rc_parallel: "{{ rc_parallel | default(false) | bool }}"
     usbkey_enabled: "{{ usbkey_enabled | default(true) | bool }}"
     usbkey_label: "{{ usbkey_label | default('') }}"
     usbkey_mnt: "{{ usbkey_mnt | default('') }}"
-    mpd_rootdir: "/etc/mpd"
   tags: ["always"]
 
 - name: Setting mpd root directory on usbkey
@@ -57,8 +58,9 @@
   lineinfile:
     path: /etc/rc.conf
     regexp: '^rc_parallel='
-    line: 'rc_parallel=YES'
-  tags: ['base']
+    line: 'rc_parallel="YES"'
+  when: rc_parallel == true
+  tags: ['base', 'rc']
 
 - name: Blacklist video related modules
   lineinfile:
@@ -115,17 +117,17 @@
 - import_tasks: mpd.yml
   tags: ['mpd']
 
-- import_tasks: avahi.yml
-  when: usbkey_enabled == true
-  tags: ['mpd']
+# - import_tasks: avahi.yml
+#   when: usbkey_enabled == true
+#   tags: ['mpd']
 
 - import_tasks: usbkey.yml
   when: usbkey_enabled == true
   tags: ['mpd']
 
-- import_tasks: samba.yml
-  when: usbkey_enabled == true
-  tags: ['mpd']
+# - import_tasks: samba.yml
+#   when: usbkey_enabled == true
+#   tags: ['mpd']
 
 - import_tasks: noradiogagad.yml
   when: radiogagad_enabled == false

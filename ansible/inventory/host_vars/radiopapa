@@ -2,6 +2,7 @@ dac: "Hifiberry2"
 
 usbkey_enabled: false
 radiogagad_enabled: false
+rc_parallel: true
 
 playlists:
   - {file: "Chante France.m3u", name: "Chante France", url: "http://stream1.chantefrance.com/Chante_France"}

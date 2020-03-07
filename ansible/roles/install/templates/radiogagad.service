@@ -6,8 +6,8 @@ NAME=radiogagad
 DAEMON=/usr/local/bin/radiogagad
 PID=/var/run/radiogagad.pid
 
-if [ -f "{{ usbkey_mount_path }}/mpd/playlists/startup.txt" ]; then
-    RGGD_STARTUP_PLAYLISTS=$(cat "{{ usbkey_mount_path }}/mpd/playlists/startup.txt")
+if [ -f "{{ usbkey_mnt }}/mpd/playlists/startup.txt" ]; then
+    RGGD_STARTUP_PLAYLISTS=$(cat "{{ usbkey_mnt }}/mpd/playlists/startup.txt")
 fi
 
 depend() {

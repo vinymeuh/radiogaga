@@ -4,7 +4,7 @@
 
 The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network audio player build around a Raspberry Pi. There is many software solutions to bring it to life: [Volumeio](https://volumio.org/), [piCorePlayer](https://www.picoreplayer.org/), [RuneAudio](http://www.runeaudio.com/) and others.
 
-**Radiogaga** is my own solution based made with :heart:, [Ansible](https://www.ansible.com/), [Alpine Linux](https://alpinelinux.org/) and [radiogagad](https://github.com/vinymeuh/radiogagad).
+**Radiogaga** is my own solution made with :heart:, [Ansible](https://www.ansible.com/), [Alpine Linux](https://alpinelinux.org/) and [radiogagad](https://github.com/vinymeuh/radiogagad).
 
 **Table of Contents**
 
@@ -12,7 +12,6 @@ The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network au
   - [Bootstrap Alpine Linux](#Bootstrap-Alpine-Linux)
   - [USB Key](#USB-Key)
   - [Finish installation](#Finish-installation)
-- [Backup & Restore](#Backup-&-restore)
 
 ## Installation
 
