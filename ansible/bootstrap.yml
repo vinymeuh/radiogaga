@@ -1,6 +1,0 @@
-- name: radiogaga bootstrap
-  hosts: localhost
-  gather_facts: no
-
-  roles:
-    - bootstrap

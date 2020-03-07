@@ -1,24 +1,43 @@
-- name: Check current firmware configuration
-  template:
-    src: usercfg.txt
-    dest: /media/mmcblk0p1/usercfg.txt
-  check_mode: true
-  register: firmware
-
 - name: Remount SD card RW
   command: mount -o remount,rw /media/mmcblk0p1
   args:
     warn: no
-  when: firmware.changed
 
-- name: Copy usercfg.txt on SD card
-  template:
-    src: usercfg.txt
-    dest: /media/mmcblk0p1/usercfg.txt
-  when: firmware.changed
+- name: Disable HDMI, same as tvservice -o
+  lineinfile:
+    path: "/media/mmcblk0p1/usercfg.txt"
+    line: "{{ item }}"
+    create: yes
+  loop:
+    - hdmi_ignore_hotplug=1
+    - hdmi_ignore_composite=1
+
+- name: Disable Bluetooth
+  lineinfile:
+    path: "/media/mmcblk0p1/usercfg.txt"
+    line: "dtoverlay=pi3-disable-bt"
+
+- name: Disable the Pi integrated soundcard
+  lineinfile:
+    path: "/media/mmcblk0p1/usercfg.txt"
+    line: "dtparam=audio=off"
+
+- name: Enable DAC Sabre ES9023
+  lineinfile:
+    path: "/media/mmcblk0p1/usercfg.txt"
+    line: "{{ item }}"
+  loop:
+    - dtparam=i2s=on
+    - dtoverlay=hifiberry-dac
+  when: dac == "SabreES9023"
+
+- name: Enable DAC Hifiberry2
+  lineinfile:
+    path: "/media/mmcblk0p1/usercfg.txt"
+    line: "dtoverlay=hifiberry-dacplus"
+  when: dac == "Hifiberry2"
 
 - name: Remount SD card RO
   command: mount -o remount,ro /media/mmcblk0p1
   args:
     warn: no
-  when: firmware.changed

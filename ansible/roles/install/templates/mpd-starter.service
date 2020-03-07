@@ -1,0 +1,44 @@
+#!/sbin/openrc-run
+
+NAME=mpd-starter
+MPD_SOCKET="/var/run/mpd/socket"
+
+depend() {
+    need net
+    need localmount
+    use mpd
+}
+
+start() {
+    ebegin "Starting ${NAME}"
+    while [ ! -S $_MPD_SOCKET ]
+    do
+        sleep 3
+    done
+
+    mpc -q -h $MPD_SOCKET lsplaylists | sort | while read pl
+    do
+        mpc -q -h $MPD_SOCKET load "$pl"
+        mpc -q -h $MPD_SOCKET play
+        sleep 10
+        CURRENT=$(mpc -q -h $MPD_SOCKET current)
+        if [ ! -z "$CURRENT" ] ; then
+            break
+        fi
+        mpc -q -h $MPD_SOCKET clear
+    done
+
+    CURRENT=$(mpc -q -h $MPD_SOCKET current)
+    if [ -z "$CURRENT" ]; then
+        eend 1
+    else
+        eend 0
+    fi
+}
+
+stop() {
+    ebegin "Stopping ${NAME}"
+    mpc -q -h $MPD_SOCKET stop
+    mpc -q -h $MPD_SOCKET clear
+    eend 0
+}

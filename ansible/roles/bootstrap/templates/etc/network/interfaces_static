@@ -1,8 +1,0 @@
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet static
-    address {{ bootstrap.initialize.ip | mandatory }}
-    netmask {{ bootstrap.initialize.netmask | mandatory }}
-    gateway {{ bootstrap.initialize.gateway | mandatory }}

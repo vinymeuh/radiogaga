@@ -1,5 +1,0 @@
-- name: Setup network for static IP
-  template:
-    src: etc/network/interfaces_static
-    dest: "{{ tempfile.path }}/etc/network/interfaces"
-    mode: "0644"

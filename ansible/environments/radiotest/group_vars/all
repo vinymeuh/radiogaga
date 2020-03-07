@@ -1,9 +1,0 @@
-bootstrap:
-  alpine_version: "3.10.2"
-  arch: "armv7"   # RPi 2B v1.1 can't use aarch64
-  mount_point: "/Volumes/RADIOTEST"
-  trusted_ca_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEKPw1sMGmQ5NS8nnqWnHRHBPMG+Fkd9drQM/izn23c MyCA"
-
-  initialize:
-    hostname: "radiotest"
-    use_dhcp: true

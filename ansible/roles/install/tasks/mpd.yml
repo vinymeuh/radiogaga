@@ -9,7 +9,20 @@
     enabled: yes
   notify: restart mpd
 
-- name: Copy mpd.conf
+- name: Create directories for mpd on SD card
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: mpd
+    group: audio
+    mode: 0755
+  loop:
+    - "{{ mpd_rootdir }}"
+    - "{{ mpd_rootdir }}/music"
+    - "{{ mpd_rootdir }}/playlists"
+  when: usbkey_enabled == false
+
+- name: Copy /etc/mpd.conf
   template:
     src: mpd.conf
     dest: /etc/mpd.conf
@@ -17,36 +30,3 @@
     group: audio
     mode: 0640
   notify: restart mpd
-
-- name: Create a directory for mpd on USBKEY
-  file:
-    path: "{{ usbkey_mount_path }}/mpd"
-    state: directory
-    owner: mpd
-    group: audio
-    mode: 0755
-
-- name: Create music & playlists directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: mpd
-    group: audio
-    mode: 0777
-  with_items:
-    - "{{ usbkey_mount_path }}/mpd/music"
-    - "{{ usbkey_mount_path }}/mpd/playlists"
-
-- name: Check if file mpd.db exists
-  stat:
-    path: "{{ usbkey_mount_path }}/mpd/mpd.db"
-  register: mpddb
-
-- name: Fix attributes on file mpd.db
-  file:
-    path: "{{ usbkey_mount_path }}/mpd/mpd.db"
-    state: file
-    owner: mpd
-    group: audio
-    mode: 0644
-  when: mpddb.stat.exists == true

@@ -1,0 +1,5 @@
+- name: setup radiogaga
+  hosts: "{{ target | default('no_hosts') }}"
+
+  roles:
+    - install
