@@ -146,6 +146,7 @@
     group: audio
     mode: 0644
   loop: "{{ playlists }}"
+  when: playlists is defined
   tags: ['playlists']
 
 # LBU commit must always be the last
