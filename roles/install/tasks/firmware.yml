@@ -17,6 +17,12 @@
     path: "/media/mmcblk0p1/usercfg.txt"
     line: "dtoverlay=pi3-disable-bt"
 
+- name: Disable Wifi
+  lineinfile:
+    path: "/media/mmcblk0p1/usercfg.txt"
+    line: "dtoverlay=pi3-disable-wifi"
+  when: wifi_enabled == false 
+
 - name: Disable the Pi integrated soundcard
   lineinfile:
     path: "/media/mmcblk0p1/usercfg.txt"

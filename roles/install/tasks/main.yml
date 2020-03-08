@@ -8,6 +8,7 @@
     usbkey_enabled: "{{ usbkey_enabled | default(true) | bool }}"
     usbkey_label: "{{ usbkey_label | default('') }}"
     usbkey_mnt: "{{ usbkey_mnt | default('') }}"
+    wifi_enabled: "{{ wifi_enabled | default(false) | bool }}"
   tags: ["always"]
 
 - name: Setting mpd root directory on usbkey
