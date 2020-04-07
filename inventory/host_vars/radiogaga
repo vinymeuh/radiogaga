@@ -5,8 +5,10 @@ usbkey_mnt: "/media/USBKEY"
 
 playlists:
   - {file: "Nova.m3u", name: "Nova", url: "http://novazz.ice.infomaniak.ch/novazz-128.mp3"}
-  - {file: "J1 Radio.m3u", name: "J1 Radio", url: "http://sky1.torontocast.com:9041/.mp3"}
-  - {file: "J1 Gold.m3u", name: "J1 Gold", url: "http://sky1.torontocast.com:9069/.mp3"}
-  - {file: "J1 Xtra.m3u", name: "J1 Xtra", url: "http://sky1.torontocast.com:9061/.mp3"}
+  - {file: "J1 Radio.m3u", name: "J1 Radio", url: "http://hits.j1fm.tokyo"}
+  - {file: "J1 Gold.m3u", name: "J1 Gold", url: "http://gold.j1fm.tokyo"}
+  - {file: "J1 Xtra.m3u", name: "J1 Xtra", url: "http://xtra.j1fm.tokyo"}
   - {file: "Classic FM.m3u", name: "Classic FM", url: "http://classicfm.ice.infomaniak.ch/classic-fm.mp3"} 
   - {file: "Radio Classique.m3u", name: "Radio Classique", url: "http://radioclassique.ice.infomaniak.ch/radioclassique-high.mp3"}
+  - {file: "La Grosse Radio Métal.m3u", name: "La Grosse Radio Métal", url: "http://hd.lagrosseradio.info/lagrosseradio-metal-192.mp3"}
+  
