@@ -25,12 +25,6 @@
     path: /etc/inittab
     state: absent
     regexp: '^tty[2-6]:.*getty.*' 
-  # loop:
-  #   - "tty2"
-  #   - "tty3"
-  #   - "tty4"
-  #   - "tty5"
-  #   - "tty6"
 
 - name: Enable parallel boot
   lineinfile:
