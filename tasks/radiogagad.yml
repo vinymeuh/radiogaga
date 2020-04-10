@@ -8,11 +8,13 @@
   get_url:
     url: "{{ json_response.json.assets.0.browser_download_url }}"
     dest: /tmp/radiogagad.zip
+  changed_when: False
 
 - name: Unarchive downloaded file
   command: unzip -oq /tmp/radiogagad.zip -d /tmp
   args:
     warn: no  # unarchive module not working on Alpine Linux
+  changed_when: False
 
 - name: Copy radiogagad binary
   copy: src=/tmp/radiogagad dest=/usr/local/bin/radiogagad remote_src=yes mode=0755

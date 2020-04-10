@@ -2,6 +2,7 @@
   command: mount -o remount,rw /media/mmcblk0p1
   args:
     warn: no
+  changed_when: False
 
 - name: Disable HDMI, same as tvservice -o
   lineinfile:
@@ -47,3 +48,4 @@
   command: mount -o remount,ro /media/mmcblk0p1
   args:
     warn: no
+  changed_when: False
