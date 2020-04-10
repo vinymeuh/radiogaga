@@ -1,0 +1,32 @@
+- name: Fail if dac variable is incorrect
+  fail:
+    msg:  "Variable 'dac' must be 'Hifiberry2' or 'SabreES9023'"
+  when: dac is not in ["Hifiberry2", "SabreES9023"]
+
+- import_tasks: alpine.yml
+
+- name: Set up the usb key
+  block:
+    - name: Enable and Mount USB key
+      mount: path="{{ usbkey_mnt }}" src="LABEL={{ usbkey_label }}" fstype=f2fs opts=noatime passno="2" state=mounted
+    - name: Setting mpd root directory on the usb key
+      set_fact:
+        mpd_rootdir: "{{ usbkey_mnt }}/mpd"
+    - name: Install Samba
+      include_tasks: samba.yml
+  when: usbkey_enabled == true
+
+- import_tasks: mpd.yml
+
+- name: Install mpd-starter for setup without radiogagad
+  include_tasks: mpd-starter.yml
+  when: radiogagad_enabled == false
+
+- name: Install radiogagad
+  include_tasks: radiogagad.yml
+  when: radiogagad_enabled == true
+
+- name: Copy playlists files
+  template: src=playlist.m3u dest="{{ mpd_rootdir }}/playlists/{{ item.file }}" owner=mpd group=audio mode=0644
+  loop: "{{ playlists }}"
+  tags: ['playlists']
