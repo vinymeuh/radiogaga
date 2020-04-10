@@ -14,6 +14,9 @@
   apk: name=avahi,samba-server state=present
   when: usbkey_enabled == true
 
+- name: Disable acpid
+  service: name=acpid enabled=no state=stopped
+
 - name: Disable crond
   service: name=crond enabled=no state=stopped
 
@@ -21,13 +24,13 @@
   lineinfile:
     path: /etc/inittab
     state: absent
-    regexp: '^{{ item }}:.*getty.*' 
-  loop:
-    - "tty2"
-    - "tty3"
-    - "tty4"
-    - "tty5"
-    - "tty6"
+    regexp: '^tty[2-6]:.*getty.*' 
+  # loop:
+  #   - "tty2"
+  #   - "tty3"
+  #   - "tty4"
+  #   - "tty5"
+  #   - "tty6"
 
 - name: Enable parallel boot
   lineinfile:

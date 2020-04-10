@@ -30,14 +30,3 @@
   template: src=playlist.m3u dest="{{ mpd_rootdir }}/playlists/{{ item.file }}" owner=mpd group=audio mode=0644
   loop: "{{ playlists }}"
   tags: ['playlists']
-
-# LBU commit block must always be the last task
-- block:
-  - name: Check LBU status
-    command: lbu status
-    register: lbu
-    changed_when: False
-  - name: Commit LBU changes if any
-    command: lbu commit -d
-    when: lbu.stdout | length > 0
-  tags: ['always']
