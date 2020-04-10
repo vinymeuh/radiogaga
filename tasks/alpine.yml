@@ -1,0 +1,70 @@
+- name: Enable community APK repository
+  replace:
+    path: /etc/apk/repositories
+    regexp: '^#(http://.*/v.*/community)'
+    replace: '\1'
+
+- name: Refresh repositories indexes
+  apk: update_cache=yes
+
+- name: Install mandatory packages
+  apk: name=raspberrypi,f2fs-tools,rng-tools,mpd state=present
+
+- name: Install optional packages for the usb key
+  apk: name=avahi,samba-server state=present
+  when: usbkey_enabled == true
+
+- name: Disable crond
+  service: name=crond enabled=no state=stopped
+
+- name: Remove useless console getty
+  lineinfile:
+    path: /etc/inittab
+    state: absent
+    regexp: '^{{ item }}:.*getty.*' 
+  loop:
+    - "tty2"
+    - "tty3"
+    - "tty4"
+    - "tty5"
+    - "tty6"
+
+- name: Enable parallel boot
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^rc_parallel='
+    line: 'rc_parallel="YES"'
+  when: rc_parallel == true
+
+- name: Disable IPv4 Duplicate Address Detection
+  file: path=/etc/network/if-up.d/dad mode="a-x"
+
+- name: Blacklist video related modules
+  lineinfile:
+    path: /etc/modprobe.d/radiogaga_blacklist.conf
+    line: "{{ item }}"
+    create: yes
+  loop:
+    - blacklist bcm2835_codec
+    - blacklist bcm2835_v4l2
+    - blacklist media
+    - blacklist vc_sm_cma
+
+# https://bugs.alpinelinux.org/issues/9960
+- name: Enable rngd earliest at boot
+  service: name=rngd enabled=yes runlevel=sysinit state=started
+
+- name: syslog
+  block:
+    # https://bugs.alpinelinux.org/issues/8028
+    - name: Workaround for busybox syslogd -Z option broken
+      replace:
+        path: /etc/conf.d/syslog
+        regexp: '^SYSLOGD_OPTS="(.*)-Z(.*)"'
+        replace: 'SYSLOGD_OPTS="\1\2"'
+      notify: restart syslog
+    - name: Enable syslog service
+      service: name=syslog enabled=yes
+
+- import_tasks: firmware.yml
+  

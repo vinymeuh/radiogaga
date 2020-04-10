@@ -15,18 +15,11 @@
     warn: no  # unarchive module not working on Alpine Linux
 
 - name: Copy radiogagad binary
-  copy:
-    src: /tmp/radiogagad
-    dest: /usr/local/bin/radiogagad
-    remote_src: yes
-    mode: 0755
+  copy: src=/tmp/radiogagad dest=/usr/local/bin/radiogagad remote_src=yes mode=0755
   notify: restart radiogagad  
 
 - name: Copy radiogagad init.d script
-  template:
-    src: radiogagad.service
-    dest: /etc/init.d/radiogagad
-    mode: 0755
+  template: src=radiogagad.service dest=/etc/init.d/radiogagad mode=0755
   notify: restart radiogagad  
 
 - name: Add the radiogagad files to LBU included files
@@ -36,7 +29,4 @@
     - "/etc/init.d/radiogagad"
 
 - name: Enable radiogagad
-  service:
-    name: radiogagad
-    enabled: yes
-  notify: restart radiogagad
+  service: name=radiogagad enabled=yes

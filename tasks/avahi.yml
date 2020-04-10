@@ -1,15 +1,3 @@
-- name: Install avahi package
-  apk:
-    name: avahi
-    state: present
-
-- name: Remove useless start dependency with dbus
-  lineinfile:
-    path: /etc/init.d/avahi-daemon
-    regexp: '.*need dbus.*'
-    state: absent
-  notify: restart avahi
-
 - name: Remove useless start dependency with dbus
   block:
     - name: Fix /etc/init.d/avahi-daemon
@@ -22,14 +10,8 @@
       command: lbu add /etc/init.d/avahi-daemon
 
 - name: Copy /etc/avahi/avahi-daemon.conf
-  template:
-    src: avahi-daemon.conf
-    dest: /etc/avahi/avahi-daemon.conf
-    mode: 0644
+  template: src=avahi-daemon.conf dest=/etc/avahi/avahi-daemon.conf mode=0644
   notify: restart avahi
 
 - name: Enable avahi-daemon
-  service:
-    name: avahi-daemon
-    enabled: yes
-  notify: restart avahi
+  service: name=avahi-daemon enabled=yes

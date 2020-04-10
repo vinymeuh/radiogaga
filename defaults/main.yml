@@ -1,0 +1,16 @@
+---
+dac: "SabreES9023"
+
+mpd_rootdir: "/etc/mpd"
+
+playlists: ""
+
+radiogagad_enabled: true
+
+rc_parallel: false
+
+usbkey_enabled: true
+usbkey_label: ""
+usbkey_mnt: ""
+
+wifi_enabled: false
