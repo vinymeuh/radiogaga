@@ -23,7 +23,9 @@
   notify: restart radiogagad  
 
 - name: Add the radiogagad files to LBU included files
-  command: lbu add '{{ item }}'
+  command: lbu add -v '{{ item }}'
+  register: lbucmd
+  changed_when: '"Adding" in lbucmd.stdout'
   loop:
     - "/usr/local/bin/radiogagad"
     - "/etc/init.d/radiogagad"

@@ -8,6 +8,8 @@
       notify: restart avahi
     - name: Add /etc/init.d/avahi-daemon to LBU included files
       command: lbu add /etc/init.d/avahi-daemon
+      register: lbucmd
+      changed_when: '"Adding" in lbucmd.stdout'
 
 - name: Copy /etc/avahi/avahi-daemon.conf
   template: src=avahi-daemon.conf dest=/etc/avahi/avahi-daemon.conf mode=0644
