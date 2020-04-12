@@ -14,17 +14,17 @@
         mpd_rootdir: "{{ usbkey_mnt }}/mpd"
     - name: Install Samba
       include_tasks: samba.yml
-  when: usbkey_enabled == true
+  when: usbkey_enabled
 
 - import_tasks: mpd.yml
 
 - name: Install mpd-starter for setup without radiogagad
   include_tasks: mpd-starter.yml
-  when: radiogagad_enabled == false
+  when: not radiogagad_enabled
 
 - name: Install radiogagad
   include_tasks: radiogagad.yml
-  when: radiogagad_enabled == true
+  when: radiogagad_enabled
 
 - name: Copy playlists files
   template: src=playlist.m3u dest="{{ mpd_rootdir }}/playlists/{{ item.file }}" owner=mpd group=audio mode=0644

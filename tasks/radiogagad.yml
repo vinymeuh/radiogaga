@@ -33,7 +33,7 @@
 - block:
   - name: Copy radiogagad init.d script
     template: src=radiogagad.service dest=/etc/init.d/radiogagad mode=0755
-    notify: restart radiogagad  
+    notify: restart radiogagad
   - name: Add the radiogagad init.d script to LBU included files
     command: lbu add -v /etc/init.d/radiogagad
     register: lbucmd

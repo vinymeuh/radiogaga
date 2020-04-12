@@ -3,3 +3,6 @@ dependencies: []
 
 galaxy_info:
   author: vinymeuh
+  description: RaspDAC setup
+  license: MIT
+  min_ansible_version: 2.9

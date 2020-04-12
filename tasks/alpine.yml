@@ -12,7 +12,7 @@
 
 - name: Install optional packages for the usb key
   apk: name=avahi,samba-server state=present
-  when: usbkey_enabled == true
+  when: usbkey_enabled
 
 - name: Disable acpid
   service: name=acpid enabled=no state=stopped
@@ -24,14 +24,14 @@
   lineinfile:
     path: /etc/inittab
     state: absent
-    regexp: '^tty[2-6]:.*getty.*' 
+    regexp: '^tty[2-6]:.*getty.*'
 
 - name: Enable parallel boot
   lineinfile:
     path: /etc/rc.conf
     regexp: '^rc_parallel='
     line: 'rc_parallel="YES"'
-  when: rc_parallel == true
+  when: rc_parallel
 
 - name: Disable IPv4 Duplicate Address Detection
   file: path=/etc/network/if-up.d/dad mode="a-x"

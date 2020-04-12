@@ -1,5 +1,5 @@
 - name: Create mpd root directory
-  file: path="{{ mpd_rootdir }}" state=directory owner=mpd group=audio mode=0755   
+  file: path="{{ mpd_rootdir }}" state=directory owner=mpd group=audio mode=0755
 
 - name: Create playlists and music directories
   file: path="{{ item }}" state=directory owner=mpd group=audio mode=0777
@@ -13,7 +13,7 @@
 
 - name: Fix owner and rights on file mpd.db
   file: path="{{ usbkey_mnt }}/mpd/mpd.db" state=file owner=mpd group=audio mode=0644
-  when: mpddb.stat.exists == true
+  when: mpddb.stat.exists
 
 - name: Copy /etc/mpd.conf
   template: src=mpd.conf dest=/etc/mpd.conf owner=mpd group=audio mode=0640
