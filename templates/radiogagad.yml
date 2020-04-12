@@ -1,0 +1,1 @@
+{{ radiogagad_configuration | to_nice_yaml(indent=2) }}

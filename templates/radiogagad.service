@@ -2,33 +2,20 @@
 
 # init.d file for radiogagad
 
-NAME=radiogagad
-DAEMON=/usr/local/bin/radiogagad
-PID=/var/run/radiogagad.pid
-
-if [ -f "{{ usbkey_mnt }}/mpd/playlists/startup.txt" ]; then
-    RGGD_STARTUP_PLAYLISTS=$(cat "{{ usbkey_mnt }}/mpd/playlists/startup.txt")
-fi
+name="radiogagad"
+command=/usr/local/bin/radiogagad
+pidfile="/var/run/$SVCNAME.pid"
 
 depend() {
-    need net
-    need localmount
+    need net localmount
     use mpd
 }
 
-
 start() {
-    ebegin "Starting ${NAME}"
-    start-stop-daemon  --background --start --exec ${DAEMON} \
-        --env RGGD_STARTUP_PLAYLISTS=${RGGD_STARTUP_PLAYLISTS} \
-        --stdout-logger "logger -t ${NAME} -p daemon.info"  \
-        --stderr-logger "logger -t ${NAME} -p daemon.err"  \
-        --make-pidfile --pidfile ${PID}
-    eend $?
-}
-
-stop() {
-    ebegin "Stopping ${NAME}"
-    start-stop-daemon --stop --pidfile ${PID}
+    ebegin "Starting $name"
+    start-stop-daemon  --background --start --user radiogagad --group gpio --exec ${command} \
+        --stdout-logger "logger -t $name -p daemon.info"  \
+        --stderr-logger "logger -t $name -p daemon.err"  \
+        --make-pidfile --pidfile $pidfile
     eend $?
 }

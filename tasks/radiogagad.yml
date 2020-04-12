@@ -1,36 +1,47 @@
-- name: Retrieve download url for latest radiogagad release from github
-  uri:
-    url: https://api.github.com/repos/vinymeuh/radiogagad/releases/latest
-    return_content: true
-  register: json_response
+- name: Create user radiogagad
+  user: name=radiogagad group=gpio home=/ create_home=no shell=/sbin/nologin comment=radiogagad
 
-- name: Download latest radiogagad release from github
-  get_url:
-    url: "{{ json_response.json.assets.0.browser_download_url }}"
-    dest: /tmp/radiogagad.zip
-  changed_when: False
+- name: Enable passwordless poweroff for radiogagad
+  lineinfile:
+    path: /etc/sudoers
+    line: 'radiogagad radiogagad=(root) NOPASSWD: /sbin/poweroff'
 
-- name: Unarchive downloaded file
-  command: unzip -oq /tmp/radiogagad.zip -d /tmp
-  args:
-    warn: no  # unarchive module not working on Alpine Linux
-  changed_when: False
+- block:
+  - name: Retrieve download url for latest radiogagad release from github
+    uri:
+      url: https://api.github.com/repos/vinymeuh/radiogagad/releases/latest
+      return_content: true
+    register: json_response
+  - name: Download latest radiogagad release from github
+    get_url:
+      url: "{{ json_response.json.assets.0.browser_download_url }}"
+      dest: /tmp/radiogagad.zip
+    changed_when: False
+  - name: Unarchive downloaded file
+    command: unzip -oq /tmp/radiogagad.zip -d /tmp
+    args:
+      warn: no  # unarchive module not working on Alpine Linux
+    changed_when: False
+  - name: Copy radiogagad binary
+    copy: src=/tmp/radiogagad dest=/usr/local/bin/radiogagad remote_src=yes mode=0755
+    notify: restart radiogagad
+  - name: Add the radiogagad binary to LBU included files
+    command: lbu add -v /usr/local/bin/radiogagad
+    register: lbucmd
+    changed_when: '"Adding" in lbucmd.stdout'
 
-- name: Copy radiogagad binary
-  copy: src=/tmp/radiogagad dest=/usr/local/bin/radiogagad remote_src=yes mode=0755
-  notify: restart radiogagad  
+- block:
+  - name: Copy radiogagad init.d script
+    template: src=radiogagad.service dest=/etc/init.d/radiogagad mode=0755
+    notify: restart radiogagad  
+  - name: Add the radiogagad init.d script to LBU included files
+    command: lbu add -v /etc/init.d/radiogagad
+    register: lbucmd
+    changed_when: '"Adding" in lbucmd.stdout'
+  - name: Enable radiogagad
+    service: name=radiogagad enabled=yes
 
-- name: Copy radiogagad init.d script
-  template: src=radiogagad.service dest=/etc/init.d/radiogagad mode=0755
-  notify: restart radiogagad  
-
-- name: Add the radiogagad files to LBU included files
-  command: lbu add -v '{{ item }}'
-  register: lbucmd
-  changed_when: '"Adding" in lbucmd.stdout'
-  loop:
-    - "/usr/local/bin/radiogagad"
-    - "/etc/init.d/radiogagad"
-
-- name: Enable radiogagad
-  service: name=radiogagad enabled=yes
+- name: Copy radiogagad configuration file
+  template: src=radiogagad.yml dest=/etc/radiogagad.yml mode=0644
+  when: radiogagad_configuration is defined
+  notify: restart radiogagad

@@ -1,3 +1,6 @@
+- name: mdev scan
+  command: mdev -s
+
 - name: restart avahi
   service: name=avahi-daemon state=restarted
 
