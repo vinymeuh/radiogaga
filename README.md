@@ -1,40 +1,71 @@
-# radiogaga - setup for my RaspDAC
+# radiogaga - an Ansible role to setup my RaspDAC
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The RaspDAC from [Audiophonics](https://www.audiophonics.fr/fr/) is a network audio player build around a Raspberry Pi. There is many software solutions to bring it to life: [Volumeio](https://volumio.org/), [piCorePlayer](https://www.picoreplayer.org/), [RuneAudio](http://www.runeaudio.com/) and others.
 
-**Radiogaga** is my own solution made with :heart:, [Ansible](https://www.ansible.com/), [Alpine Linux](https://alpinelinux.org/) and [radiogagad](https://github.com/vinymeuh/radiogagad).
+**Radiogaga** is my own solution made with [Ansible](https://www.ansible.com/), [Alpine Linux](https://alpinelinux.org/), [radiogagad](https://github.com/vinymeuh/radiogagad) and :heart:.
 
-**Table of Contents**
+See [raspi-ansible](https://github.com/vinymeuh/raspi-ansible/blob/master/deploy-radiogaga.yml) for the playbook used to manage my RaspDAC.
 
-- [Installation](#Installation)
-  - [Bootstrap Alpine Linux](#Bootstrap-Alpine-Linux)
-  - [USB Key](#USB-Key)
-  - [Finish installation](#Finish-installation)
+## Requirements
 
-## Installation
+Thanks to Alpine Linux the SD Card is mounted read only. To store MPD database and a large music collection, a USB key can optionaly be used to be mounted read-write.
 
-### Bootstrap Alpine Linux
-
-See [raspi-ansible](https://github.com/vinymeuh/raspi-ansible)
-
-### USB Key
-
-Thanks to Alpine Linux the SD Card is mounted read only. To store MPD database and a large music collection, a USB key is used to be mounted read-write.
-
-The USB key preparation is not integrated in playbooks and have to be done manually.
-
-I choose to format the key with F2FS, see [a presentation of F2FS (in french)](https://korben.info/f2fs-systeme-de-fichiers-pense-raspberry-pi-linstaller.html).
+The USB key format have to be done manually, I choose to use F2FS:
 
 ```shell
 mkfs.f2fs -l USBKEY /dev/sda
 ```
 
-### Finish installation
+## Role Variables
 
-```shell
-ansible-playbook setup-radiogaga.yml -e target=radiogaga
+```yaml
+dac: "SabreES9023"
 ```
 
-If no errors, enjoy your new [:radio:](https://www.youtube.com/watch?v=azdwsXLmrHE)
+The type of DAC in the RaspDAC.
+
+```yaml
+mpd_rootdir: "/etc/mpd"
+```
+
+Directory for mpd database and Playlists & Music directories, overriden when ```usbkey_enabled: true```.
+
+```yaml
+playlists: ""
+```
+
+List of specifications for playlists in format: ```{file: "...", name: "...", url: "http://..."}```.
+
+```yaml
+radiogagad_enabled: true
+radiogagad_configuration: ""
+```
+
+Controls radiogagad install and setup:
+
+* when set to false, only a init script to start mpd play is installed.
+* otherwise installs last published version of [radiogagad](https://github.com/vinymeuh/radiogagad).
+
+```radiogagad_configuration``` can be used to define content of ```/etc/radiogagad.yml``` (see [radiogagad.yml.template](https://github.com/vinymeuh/radiogagad/blob/master/radiogagad.yml.template) for file format).
+
+```yaml
+rc_parallel: false
+```
+
+Enable OpenRC parallel boot.
+
+```yaml
+usbkey_enabled: true
+usbkey_label: ""
+usbkey_mnt: ""
+```
+
+Enables USB key use and defines filesystem label and mount point.
+
+```yaml
+wifi_enabled: false
+```
+
+Controls wifi activation in firmware.

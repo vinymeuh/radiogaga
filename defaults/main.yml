@@ -6,6 +6,7 @@ mpd_rootdir: "/etc/mpd"
 playlists: ""
 
 radiogagad_enabled: true
+radiogagad_configuration: ""
 
 rc_parallel: false
 

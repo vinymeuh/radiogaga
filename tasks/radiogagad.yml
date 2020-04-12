@@ -43,5 +43,5 @@
 
 - name: Copy radiogagad configuration file
   template: src=radiogagad.yml dest=/etc/radiogagad.yml mode=0644
-  when: radiogagad_configuration is defined
+  when: radiogagad_configuration != ""
   notify: restart radiogagad
