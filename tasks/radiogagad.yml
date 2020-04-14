@@ -1,11 +1,6 @@
 - name: Create user radiogagad
   user: name=radiogagad group=gpio home=/ create_home=no shell=/sbin/nologin comment=radiogagad
 
-- name: Enable passwordless poweroff for radiogagad
-  lineinfile:
-    path: /etc/sudoers
-    line: 'radiogagad radiogagad=(root) NOPASSWD: /sbin/poweroff'
-
 - block:
   - name: Retrieve download url for latest radiogagad release from github
     uri:

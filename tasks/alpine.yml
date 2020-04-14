@@ -8,7 +8,7 @@
   apk: update_cache=yes
 
 - name: Install mandatory packages
-  apk: name=raspberrypi,f2fs-tools,rng-tools,sudo,mpd state=present
+  apk: name=raspberrypi,f2fs-tools,rng-tools,mpd state=present
 
 - name: Install optional packages for the usb key
   apk: name=avahi,samba-server state=present
